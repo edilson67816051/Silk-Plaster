@@ -1,3 +1,3 @@
 <div>
-   HOla este es el dasboar
+   Dashboard
 </div>
