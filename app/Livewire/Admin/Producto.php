@@ -12,14 +12,10 @@ class Producto extends Component
     public $nombreproducto ="";
     public $unidad ="";
     public $stock;
-
-    public function mount()
-    {
-        $this->productos = ModelsProducto::all();
-    }
     
     public function render()
     {
+        $this->productos = ModelsProducto::all();
         return view('livewire.admin.producto')->layout('layouts.admin');
     }
 
@@ -30,6 +26,18 @@ class Producto extends Component
         $produc->unidad_medida = $this->unidad;
         $produc->stock = $this->stock;
         $produc->save();
+        $this->clear();
         
+    }
+
+    public function clear(){
+        $this->nombreproducto = '';
+        $this->unidad = '';
+        $this->stock = 0;
+    }
+
+    public function delete($productoId){
+        $prod = ModelsProducto::find($productoId);
+        $prod->delete();
     }
 }

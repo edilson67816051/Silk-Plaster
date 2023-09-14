@@ -41,7 +41,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <button class="btn btn-danger" type="button" data-dismiss="modal">Salir</button>
                                 <button type="submit" class="btn btn-primary" wire:click="store">Guardar</button>
 
                         </div>
@@ -59,6 +59,7 @@
                             <th>PRODUCTO</th>
                             <th>MEDIDA</th>
                             <th>STOCK</th>
+                            <th>OPCIONES</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -67,6 +68,7 @@
                             <th>PRODUCTO</th>
                             <th>MEDIDA</th>
                             <th>STOCK</th>
+                            <th>OPCIONES</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -76,6 +78,11 @@
                                 <td>{{ $producto->producto }}</td>
                                 <td>{{ $producto->unidad_medida }}</td>
                                 <td>{{ $producto->stock }}</td>
+                                    <td>
+                                        <button class="btn btn-danger" wire:click="delete({{ $producto->id }})">Del</button>
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#productoModa" >Edit</button>
+                                    </td>
+                        
                             </tr>
                         @endforeach
                     </tbody>
