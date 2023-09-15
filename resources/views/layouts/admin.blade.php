@@ -67,7 +67,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Productos</h6>
                         <a class="collapse-item" href="{{url('/producto')}}">Productos</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <a class="collapse-item" href="{{url('/inventario')}}">Inventario</a>
                     </div>
                 </div>
             </li>

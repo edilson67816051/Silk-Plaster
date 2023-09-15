@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Admin\AdminIndex;
 use App\Livewire\Admin\Producto;
+use App\Livewire\Inventario\Create;
+use App\Livewire\Inventario\InventarioIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +34,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/producto',Producto::class)
+->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/inventario',InventarioIndex::class)
 ->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__ . '/auth.php';

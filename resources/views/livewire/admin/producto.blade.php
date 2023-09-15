@@ -10,8 +10,8 @@
             </a>
 
             <!-- Producto Modal-->
-            <div class="modal fade" id="productoModal" wire:ignore.self tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
+            <div class="modal fade" id="productoModal" wire:ignore.self tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -21,15 +21,16 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                           
+
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Producto</label>
-                                <input type="text" class="form-control" wire:model.lazy="nombreproducto" id="nombreproducto" placeholder="Producto...">
-                               
+                                <input type="text" class="form-control" wire:model.lazy="nombreproducto"
+                                    id="nombreproducto" placeholder="Producto...">
+
                             </div>
 
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Medida</label>
+                                <label for="exampleFormControlInput1" class="form-label">Unidad Medida</label>
                                 <input type="email" class="form-control" id="unidad" wire:model.lazy="unidad"
                                     placeholder="medida...">
                             </div>
@@ -42,7 +43,7 @@
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-danger" type="button" data-dismiss="modal">Salir</button>
-                                <button type="submit" class="btn btn-primary" wire:click="store">Guardar</button>
+                            <button type="submit" class="btn btn-primary" wire:click="store">Guardar</button>
 
                         </div>
                     </div>
@@ -57,7 +58,7 @@
                         <tr>
                             <th>ID</th>
                             <th>PRODUCTO</th>
-                            <th>MEDIDA</th>
+                            <th>UNIDAD MEDIDA</th>
                             <th>STOCK</th>
                             <th>OPCIONES</th>
                         </tr>
@@ -66,7 +67,7 @@
                         <tr>
                             <th>ID</th>
                             <th>PRODUCTO</th>
-                            <th>MEDIDA</th>
+                            <th>UNIDAD MEDIDA</th>
                             <th>STOCK</th>
                             <th>OPCIONES</th>
                         </tr>
@@ -78,11 +79,13 @@
                                 <td>{{ $producto->producto }}</td>
                                 <td>{{ $producto->unidad_medida }}</td>
                                 <td>{{ $producto->stock }}</td>
-                                    <td>
-                                        <button class="btn btn-danger" wire:click="delete({{ $producto->id }})">Del</button>
-                                        <button class="btn btn-success" data-toggle="modal" data-target="#productoModa" >Edit</button>
-                                    </td>
-                        
+                                <td>
+                                    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
+                                    >Del</button>
+                                    <button class="btn btn-success" data-toggle="modal"
+                                        wire:click="edit({{ $producto->id }})" data-target="#editModal">Edit</button>
+                                </td>
+
                             </tr>
                         @endforeach
                     </tbody>
@@ -90,6 +93,69 @@
             </div>
         </div>
 
+        <!-- Producto Modal-->
+        <div class="modal fade" id="deleteModal" wire:ignore.self tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Eliminar el producto</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger" wire:click="delete({{ $producto->id }})" 
+                           data-dismiss="modal" >Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Producto Modal-->
+        <div class="modal fade" id="editModal" wire:ignore.self tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Actulalizar el producto</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Producto</label>
+                            <input type="text" class="form-control" wire:model.lazy="nombreproducto"
+                                id="nombreproducto" placeholder="Producto...">
+
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Unidad Medida</label>
+                            <input type="email" class="form-control" id="unidad" wire:model.lazy="unidad"
+                                placeholder="medida...">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Stock</label>
+                            <input type="email" class="form-control" id="stock" wire:model.lazy="stock"
+                                placeholder="stock ...">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-danger" type="button" data-dismiss="modal">Salir</button>
+                        <button type="submit" class="btn btn-primary" wire:click="update">Guardar Cambios</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
