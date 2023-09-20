@@ -22,6 +22,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/prueba',[InventarioIndex::class, 'insert']);
+
 //Route::get('/prueba',AdminIndex::class);
 
 Route::get('/dashboard',AdminIndex::class)

@@ -13,15 +13,13 @@ return new class extends Migration
     {
         Schema::create('entrada_salidas', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha');
             $table->string('detalle');
-            $table->integer('entrada_fisica');
-            $table->integer('salida_fisica');
-            $table->integer('saldo_fisico');
-            $table->float('costo_unit');
-            $table->float('entrada_boliviano');
-            $table->float('salida_boliviano');
-            $table->float('saldo_boliviano'); 
+            $table->integer('cantidad');
+            $table->float('valor');
+            $table->integer('cantidad_total');
+            $table->float('valor_total');
+            $table->float('valor_unit');
+            $table->string('tipo');
             $table->unsignedBigInteger('producto_id');          
             $table->timestamps();    
         });
