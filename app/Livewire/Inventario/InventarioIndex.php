@@ -20,6 +20,8 @@ class InventarioIndex extends Component
 
     public $tipo, $valor, $detalle, $cantidad;
 
+    public $costo_unit, $valor_total, $cantidad_total;
+
     public function searchProduct()
     {
         if (!empty($this->search)) {
@@ -42,6 +44,8 @@ class InventarioIndex extends Component
         $this->search = $result->id;
         $this->product = $result;
         $this->showlist = false;
+        
+        $this->actualizar();
     }
 
     public function insert()
@@ -50,8 +54,8 @@ class InventarioIndex extends Component
             'valor' => 'required',
             'tipo' => 'required',
             'cantidad' => 'required',
-            ]);
-        
+        ]);
+
         $ul = Entrada_salida::orderby('updated_at', 'desc')
             ->select('*')
             ->where('producto_id', $this->search)
@@ -66,19 +70,19 @@ class InventarioIndex extends Component
         if ($this->tipo == "entrada") {
             $valor_total = $valor_ul + $this->valor;
             $cantidad_total = $cantidad_ul + $this->cantidad;
-        }else{
-            if($this->tipo == "salida"){
+        } else {
+            if ($this->tipo == "salida") {
                 $valor_total = $valor_ul - $this->valor;
                 $cantidad_total = $cantidad_ul - $this->cantidad;
-            }else{
-                
+            } else {
+
                 $valor_total = $valor_ul - $this->valor;
                 $cantidad_total = $cantidad_ul - $this->cantidad;
-                $this->valor=($this->valor)*-1;
-                $this->cantidad=($this->cantidad)*-1;
+                $this->valor = ($this->valor) * -1;
+                $this->cantidad = ($this->cantidad) * -1;
             }
         }
-        
+
         $valor_unit = ($valor_total / $cantidad_total);
 
         //dd($cantidad,$valor,$cantidad_total,$valor_total,$valor_unit);
@@ -93,29 +97,44 @@ class InventarioIndex extends Component
         $inventario->valor_unit =  $valor_unit;
         $inventario->producto_id = $this->search;
         $inventario->save();
+
+        $this->actualizar();
+    }
+
+    public function actualizar()
+    {
+        $this->costo_unit = null;
+        $this->valor_total = null;
+        $this->cantidad_total = null;
+        $this->inventario = Entrada_salida::where('producto_id', $this->search)
+            ->latest('updated_at')
+            ->limit(4)
+            ->get();
+        if (count($this->inventario) > 0) {
+            $this->costo_unit = $this->inventario[0]->valor_unit;
+            $this->valor_total = $this->inventario[0]->valor_total;
+            $this->cantidad_total = $this->inventario[0]->cantidad_total;
+        }
     }
 
     public function store()
     {
-        
         $this->insert();
         $this->clear();
     }
 
-    public function clear(){
-        $this->tipo=null;
-        $this->detalle=null;
-        $this->cantidad=null;
-        $this->valor=null;
+    public function clear()
+    {
+        $this->tipo = null;
+        $this->detalle = null;
+        $this->cantidad = null;
+        $this->valor = null;
     }
 
 
     public function render()
     {
-        $this->inventario = Entrada_salida::orderby('updated_at', 'asc')
-            ->select('*')
-            ->where('producto_id', $this->search)
-            ->get();
+
         return view('livewire.inventario.inventario-index')->layout('layouts.admin');
     }
 }

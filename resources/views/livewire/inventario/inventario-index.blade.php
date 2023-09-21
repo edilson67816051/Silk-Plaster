@@ -7,7 +7,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                             <div class="form-group">
                                 <label for="search">Buscar</label>
                                 <div class="select-wrapper">
@@ -28,7 +28,7 @@
                             </div>
                         </div>
                         @if (!empty($product))
-                            <div class="col-lg-4">
+                            <div class="col-lg-2">
                                 <div class="form-group">
                                     <label for="cantidad">Nombre</label>
                                     <input id="cantidad" class="form-control" type="text"
@@ -45,9 +45,23 @@
                             </div>
                             <div class="col-lg-2">
                                 <div class="form-group">
-                                    <label for="sub_total">Stock</label>
+                                    <label for="precio">Cantidad / Stock</label>
+                                    <input id="precio" class="form-control" type="text" name="precio"
+                                        value="{{ $cantidad_total . ' /' . $product->unidad_medida }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="sub_total">Costo Unitario</label>
                                     <input id="sub_total" class="form-control" type="text" name="sub_total"
-                                        placeholder="Sub Total" disabled>
+                                        placeholder="Sub Total" value="{{ $costo_unit . ' bs.' }}" disabled>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label for="sub_total">Valor total</label>
+                                    <input id="sub_total" class="form-control" type="text" name="sub_total"
+                                        placeholder="Sub Total" value="{{ $valor_total . ' bs.' }}" disabled>
                                 </div>
                             </div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#productoModal">
@@ -86,7 +100,18 @@
                                     <th>{{ $item->cantidad_total }}</th>
                                     <th>{{ $item->valor_total }}</th>
                                     <th>{{ $item->valor_unit }}</th>
-                                    <th>{{ $item->tipo }}</th>
+                                    <th>
+                                        @if ($item->tipo == 'entrada')
+                                            <span style="color: green">{{ $item->tipo }}</span>
+                                        @else
+                                            @if ($item->tipo == 'salida')
+                                                <span style="color: red">{{ $item->tipo }}</span>
+                                            @else
+                                                <span style="color:blue">{{ $item->tipo }}</span>
+                                            @endif
+                                        @endif
+                                    </th>
+
                                 </tr>
                             @endforeach
                         @endif
@@ -118,12 +143,17 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="form-control"> Tipo</label>
-                        <select wire:model.lazy="tipo" class="form-control" aria-label="Default select example">
-                            <option selected>Entrada</option>
+                        <select wire:model.lazy="tipo" class="form-control" id="tipo"
+                            aria-label="Default select example">
                             <option value="entrada">Entrada</option>
                             <option value="salida">Salida</option>
                             <option value="devolucion">Devolucion</option>
                         </select>
+                        @error('tipo')
+                            <small class="text-danger">
+                                {{ $message }}
+                            </small>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="exampleFormControlInput1" class="form-label">Detalle</label>

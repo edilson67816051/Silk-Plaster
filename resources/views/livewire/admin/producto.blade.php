@@ -73,48 +73,54 @@
                         </tr>
                     </tfoot>
                     <tbody>
+                        @if (!empty($productos))
                         @foreach ($productos as $producto)
-                            <tr>
-                                <td>{{ $producto->id }}</td>
-                                <td>{{ $producto->producto }}</td>
-                                <td>{{ $producto->unidad_medida }}</td>
-                                <td>{{ $producto->stock }}</td>
-                                <td>
-                                    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
-                                    >Del</button>
-                                    <button class="btn btn-success" data-toggle="modal"
-                                        wire:click="edit({{ $producto->id }})" data-target="#editModal">Edit</button>
-                                </td>
+                        <tr>
+                            <td>{{ $producto->id }}</td>
+                            <td>{{ $producto->producto }}</td>
+                            <td>{{ $producto->unidad_medida }}</td>
+                            <td>{{ $producto->stock }}</td>
+                            <td>
+                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
+                                >Del</button>
+                                <button class="btn btn-success" data-toggle="modal"
+                                    wire:click="edit({{ $producto->id }})" data-target="#editModal">Edit</button>
+                            </td>
 
-                            </tr>
-                        @endforeach
+                        </tr>
+                    @endforeach
+                            
+                        @endif
+                        
                     </tbody>
                 </table>
             </div>
         </div>
-
-        <!-- Producto Modal-->
+        @if (!empty($producto))
+             <!-- Producto Modal-->
         <div class="modal fade" id="deleteModal" wire:ignore.self tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Eliminar el producto</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger" wire:click="delete({{ $producto->id }})" 
-                           data-dismiss="modal" >Delete</button>
-                    </div>
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eliminar el producto</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger" wire:click="delete({{ $producto->id }})" 
+                       data-dismiss="modal" >Delete</button>
                 </div>
             </div>
         </div>
+    </div>
+        @endif
+       
 
         <!-- Producto Modal-->
         <div class="modal fade" id="editModal" wire:ignore.self tabindex="-1" role="dialog"
