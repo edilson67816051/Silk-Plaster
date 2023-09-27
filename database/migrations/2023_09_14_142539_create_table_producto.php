@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('producto');
             $table->string('unidad_medida');
-            $table->integer('stock');
             $table->timestamps();
         });
     }

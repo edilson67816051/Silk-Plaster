@@ -16,13 +16,11 @@ class ProductoSeeder extends Seeder
         Producto::Create([
             'producto'=>'Calzado',
             'unidad_medida'=>'Unidad',
-            'stock'=>'100'
         ]);
 
         Producto::Create([
             'producto'=>'Shor',
             'unidad_medida'=>'Unidad',
-            'stock'=>'150'
         ]);
     }
 }

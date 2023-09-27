@@ -26,23 +26,27 @@
                                 <label for="exampleFormControlInput1" class="form-label">Producto</label>
                                 <input type="text" class="form-control" wire:model.lazy="nombreproducto"
                                     id="nombreproducto" placeholder="Producto...">
-
+                                    @error('nombreproducto')
+                                    <small class="text-danger">
+                                        {{ $message }}
+                                    </small>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Unidad Medida</label>
                                 <input type="email" class="form-control" id="unidad" wire:model.lazy="unidad"
                                     placeholder="medida...">
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Stock</label>
-                                <input type="email" class="form-control" id="stock" wire:model.lazy="stock"
-                                    placeholder="stock ...">
+                                    @error('unidad')
+                                    <small class="text-danger">
+                                        {{ $message }}
+                                    </small>
+                                @enderror
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-danger" type="button" data-dismiss="modal">Salir</button>
+                            <button class="btn btn-danger" type="button" wire:click="clear" data-dismiss="modal">Salir</button>
                             <button type="submit" class="btn btn-primary" wire:click="store">Guardar</button>
 
                         </div>
@@ -59,7 +63,6 @@
                             <th>ID</th>
                             <th>PRODUCTO</th>
                             <th>UNIDAD MEDIDA</th>
-                            <th>STOCK</th>
                             <th>OPCIONES</th>
                         </tr>
                     </thead>
@@ -68,60 +71,70 @@
                             <th>ID</th>
                             <th>PRODUCTO</th>
                             <th>UNIDAD MEDIDA</th>
-                            <th>STOCK</th>
                             <th>OPCIONES</th>
                         </tr>
                     </tfoot>
                     <tbody>
                         @if (!empty($productos))
-                        @foreach ($productos as $producto)
-                        <tr>
-                            <td>{{ $producto->id }}</td>
-                            <td>{{ $producto->producto }}</td>
-                            <td>{{ $producto->unidad_medida }}</td>
-                            <td>{{ $producto->stock }}</td>
-                            <td>
-                                <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
-                                >Del</button>
-                                <button class="btn btn-success" data-toggle="modal"
-                                    wire:click="edit({{ $producto->id }})" data-target="#editModal">Edit</button>
-                            </td>
+                            @foreach ($productos as $producto)
+                                <tr>
+                                    <td>{{ $producto->id }}</td>
+                                    <td>{{ $producto->producto }}</td>
+                                    <td>{{ $producto->unidad_medida }}</td>
+                                    <td>
+                                        <button class="btn btn-danger" wire:click="select({{ $producto->id }})"
+                                            data-toggle="modal" data-target="#deleteModal">Eliminar</button>
 
-                        </tr>
-                    @endforeach
-                            
+
+
+
+                                        <button class="btn btn-success" data-toggle="modal"
+                                            wire:click="edit({{ $producto->id }})"
+                                            data-target="#editModal">Editar</button>
+                                    </td>
+
+                                </tr>
+                            @endforeach
+
                         @endif
-                        
+
                     </tbody>
                 </table>
             </div>
         </div>
-        @if (!empty($producto))
-             <!-- Producto Modal-->
+
+        <!-- Producto Modal-->
+
         <div class="modal fade" id="deleteModal" wire:ignore.self tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Eliminar el producto</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-danger" wire:click="delete({{ $producto->id }})" 
-                       data-dismiss="modal" >Delete</button>
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Eliminar el
+                            producto</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="" class="from-label">Nombre: {{$nombreproducto}}</label>
+                         
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="from-label">Unidad: {{$nombreproducto}}</label>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button"  wire:click="clear" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger" wire:click="delete()"
+                            data-dismiss="modal">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-        @endif
-       
-
         <!-- Producto Modal-->
         <div class="modal fade" id="editModal" wire:ignore.self tabindex="-1" role="dialog"
             aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -138,24 +151,28 @@
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Producto</label>
                             <input type="text" class="form-control" wire:model.lazy="nombreproducto"
-                                id="nombreproducto" placeholder="Producto...">
-
+                                id="nombreproducto" placeholder="Producto..." >
+                            @error('nombreproducto')
+                                <small class="text-danger">
+                                    {{ $message }}
+                                </small>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Unidad Medida</label>
                             <input type="email" class="form-control" id="unidad" wire:model.lazy="unidad"
                                 placeholder="medida...">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Stock</label>
-                            <input type="email" class="form-control" id="stock" wire:model.lazy="stock"
-                                placeholder="stock ...">
+                            @error('unidad')
+                                <small class="text-danger">
+                                    {{ $message }}
+                                </small>
+                            @enderror
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-danger" type="button" data-dismiss="modal">Salir</button>
+                        <button class="btn btn-danger" type="button" wire:click="clear" data-dismiss="modal">Salir</button>
                         <button type="submit" class="btn btn-primary" wire:click="update">Guardar Cambios</button>
 
                     </div>

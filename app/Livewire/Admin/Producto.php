@@ -11,8 +11,10 @@ class Producto extends Component
     
     public $nombreproducto ="";
     public $unidad ="";
-    public $stock;
     public $id;
+
+    public $id_select;
+    
     
     public function render()
     {
@@ -23,11 +25,16 @@ class Producto extends Component
     
 
     public function store(){
+
+        $this->validate([
+            'nombreproducto' => 'required',
+            'unidad' => 'required',
+        ]);
+        
         $produc = new ModelsProducto();
         
         $produc->producto = $this->nombreproducto;
         $produc->unidad_medida = $this->unidad;
-        $produc->stock = $this->stock;
         $produc->save();
         $this->clear();
         
@@ -38,26 +45,39 @@ class Producto extends Component
         $prod = ModelsProducto::find($productoId);       
         $this->nombreproducto = $prod->producto;
         $this->unidad = $prod->unidad_medida;
-        $this->stock = $prod->stock;
         
     }
 
     public function update(){
+        $this->validate([
+            'nombreproducto' => 'required',
+            'unidad' => 'required',
+        ]);
         $produc = ModelsProducto::find($this->id); 
         $produc->producto = $this->nombreproducto;
         $produc->unidad_medida = $this->unidad;
-        $produc->stock = $this->stock;
         $produc->update();
+    }
+
+    public function select($id){
+        $this->id_select = $id;       
+        $prod = ModelsProducto::find($id);       
+        $this->nombreproducto = $prod->producto;
+        $this->unidad = $prod->unidad_medida;
     }
 
     public function clear(){
         $this->nombreproducto = '';
         $this->unidad = '';
-        $this->stock = 0;
+        $this->id_select=null; 
     }
 
-    public function delete($productoId){
-        $prod = ModelsProducto::find($productoId);
-        $prod->delete();
+    public function delete(){
+        if($this->id_select){
+            $prod = ModelsProducto::find($this->id_select);
+            $prod->delete();
+        }
+        $this->clear();
+       
     }
 }

@@ -12,7 +12,7 @@
             </ul>
         </nav>
 
-        <form class="footer__form" action="https://formspree.io/f/mknkkrkj" method="POST">
+        <form >
             <h2 class="footer__newsletter">Suscribete como cliente de Silk Plaster</h2>
             <div class="footer__inputs">
                 <input type="email" placeholder="Email:" class="footer__input" name="_replyto">

@@ -45,7 +45,7 @@
                             </div>
                             <div class="col-lg-2">
                                 <div class="form-group">
-                                    <label for="precio">Cantidad / Stock</label>
+                                    <label for="precio">Cantidad</label>
                                     <input id="precio" class="form-control" type="text" name="precio"
                                         value="{{ $cantidad_total . ' /' . $product->unidad_medida }}" disabled>
                                 </div>

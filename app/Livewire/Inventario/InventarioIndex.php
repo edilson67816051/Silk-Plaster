@@ -22,6 +22,10 @@ class InventarioIndex extends Component
 
     public $costo_unit, $valor_total, $cantidad_total;
 
+    public function mount()
+    {
+        $this->tipo = 'entrada'; // Establece 'entrada' como opción seleccionada por defecto
+    }
     public function searchProduct()
     {
         if (!empty($this->search)) {
@@ -29,7 +33,7 @@ class InventarioIndex extends Component
                 ->select('*')
                 ->where('id', 'like', '%' . $this->search . '%')
                 ->orwhere('producto', 'like', '%' . $this->search . '%')
-                ->take(5)
+                ->take(6)
                 ->get();
             $this->showlist = true;
         } else {
@@ -44,7 +48,7 @@ class InventarioIndex extends Component
         $this->search = $result->id;
         $this->product = $result;
         $this->showlist = false;
-        
+
         $this->actualizar();
     }
 
@@ -108,7 +112,7 @@ class InventarioIndex extends Component
         $this->cantidad_total = null;
         $this->inventario = Entrada_salida::where('producto_id', $this->search)
             ->latest('updated_at')
-            ->limit(4)
+            ->limit(5)
             ->get();
         if (count($this->inventario) > 0) {
             $this->costo_unit = $this->inventario[0]->valor_unit;
@@ -125,7 +129,6 @@ class InventarioIndex extends Component
 
     public function clear()
     {
-        $this->tipo = null;
         $this->detalle = null;
         $this->cantidad = null;
         $this->valor = null;
